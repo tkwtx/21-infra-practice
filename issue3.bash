@@ -7,7 +7,7 @@ EXT="dump"
 
 mysqldump --single-transaction -u root -p wordpress > ${DIR}/${TODAY}.${EXT}
 
-for FILENAME in /home/menta/sql_backup/*.${EXT}; do
+for FILENAME in ${DIR}/*.${EXT}; do
 	TARGET=`basename ${FILENAME} .${EXT}`
 	if [ ${FIVEDAYSAGO} -gt ${TARGET} ]
 	then 
