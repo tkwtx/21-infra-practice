@@ -1,6 +1,16 @@
 #! /bin/bash
 
-DATA=`date +%Y%m%d`
-FIVEDAYSAGO=`date --date '5 days ago' +%Y-%m-%d`
+TODAY=`date +%Y%m%d`
+FIVEDAYSAGO=`date --date '5 days ago' +%Y%m%d`
+DIR="/home/menta/sql_backup"
+EXT="dump"
 
-mysqldump -u root wordpress wp_posts --where "post_date > '${FIVEDAYSAGO}'"> /home/menta/sql_backup/${DATA}.dump
+mysqldump --single-transaction -u root -p wordpress > ${DIR}/${TODAY}.${EXT}
+
+for FILENAME in /home/menta/sql_backup/*.${EXT}; do
+	TARGET=`basename ${FILENAME} .${EXT}`
+	if [ ${FIVEDAYSAGO} -gt ${TARGET} ]
+	then 
+		rm ${DIR}/${TARGET}.${EXT}
+	fi
+done
