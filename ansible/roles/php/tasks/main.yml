@@ -1,0 +1,19 @@
+- name: yum install remi repository
+  yum: "name={{ REMI_REPOSITORY_URL }}"
+
+- name: yum install php package
+  yum: "name={{ item }} state=present enablerepo=remi-php74"
+  loop:
+    - php
+    - php-mbstring
+    - php-pdo
+    - php-mysqlnd
+    - php-fpm
+
+- name: set www.conf
+  copy:
+    src: roles/php/files/www.conf
+    dest: /etc/php-fpm.d/
+
+- name: start php-fpm
+  service: name=php-fpm state=started enabled=yes

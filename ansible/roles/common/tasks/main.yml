@@ -1,0 +1,6 @@
+- name: yum install php package
+  yum: "name={{ item }} state=present"
+  loop:
+    - vim
+    - wget
+    - yum-cron

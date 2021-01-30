@@ -1,0 +1,11 @@
+---
+- hosts: all
+  become: yes
+  roles:
+    - common
+
+- hosts: vagrant02
+  become: yes
+  roles:
+    - nginx
+    - php
