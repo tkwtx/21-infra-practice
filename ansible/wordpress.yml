@@ -2,13 +2,13 @@
 - hosts: all
   become: yes
   roles:
-    # - common
+    - common
 
 - hosts: vagrant02
   become: yes
   roles:
-    # - nginx
-    # - php
-    # - wordpress
-    # - mysql
+    - nginx
+    - php
+    - wordpress
+    - mysql
     - openssl
