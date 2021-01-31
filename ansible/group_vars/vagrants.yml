@@ -10,3 +10,6 @@ DOMAIN_NAME: "dev.menta.me"
 
 #mysql
 MYSQL_REPO_URL: "http://dev.mysql.com/get/mysql57-community-release-el7-7.noarch.rpm"
+
+#COMMON
+USER_NAME: "menta"
