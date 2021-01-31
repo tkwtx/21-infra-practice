@@ -1,10 +1,20 @@
 server {
-    listen       80;
-    server_name  dev.menta.me;
+    listen 80;
+    server_name dev.menta.me;
+    return 301 https://$host$request_uri;
+}
+
+
+server {
+    listen       443 ssl;
+
+    ssl_certificate /etc/ssl/fullchain.pem;
+    ssl_certificate_key /etc/ssl/privkey.pem;
+
     root /var/www/html/dev.menta.me;
     charset UTF-8;
-    access_log  /var/log/nginx/dev.menta.me.log  main;
-    error_log /var/log/nginx/dev.menta.me.error.log;
+    access_log  /var/log/nginx/menta.access.log  main;
+    error_log /var/log/nginx/menta.error.log;
 
     location / {
         index  index.php index.html index.htm;

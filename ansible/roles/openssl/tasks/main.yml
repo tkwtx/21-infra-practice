@@ -1,0 +1,31 @@
+- name: install the latest version of epel-release
+  package:
+    name: epel-release
+    state: latest
+
+- name: install the latest version of python-pip
+  yum:
+    name: python-pip
+    state: latest
+    enablerepo: epel
+
+- name: pip install
+  pip:
+    name: pyOpenSSL
+
+- name: generate an OpenSSL private key
+  community.crypto.openssl_privatekey:
+    path: "{{ SSH_PATH }}/privkey.pem"
+
+- name: generate an OpenSSL CSR.
+  community.crypto.openssl_csr:
+    path: "{{ SSH_PATH }}/dummy.csr"
+    privatekey_path: "{{ SSH_PATH }}/privkey.pem"
+    common_name: dummy
+
+- name: generate a Self Signed OpenSSL certificate
+  community.crypto.x509_certificate:
+    path: "{{ SSH_PATH }}/fullchain.pem"
+    privatekey_path: "{{ SSH_PATH }}/privkey.pem"
+    csr_path: "{{ SSH_PATH }}/dummy.csr"
+    provider: selfsigned

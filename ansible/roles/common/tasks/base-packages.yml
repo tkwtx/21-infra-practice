@@ -7,3 +7,4 @@
     - wget
     - yum-cron
     - unzip
+    - git
