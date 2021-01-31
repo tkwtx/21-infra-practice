@@ -1,6 +1,2 @@
-- name: yum install php package
-  yum: "name={{ item }} state=present"
-  loop:
-    - vim
-    - wget
-    - yum-cron
+- name: include tasks/base-packages.yml
+  include_tasks: tasks/base-packages.yml

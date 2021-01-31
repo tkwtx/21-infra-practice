@@ -1,8 +1,12 @@
 - name: yum install remi repository
-  yum: "name={{ REMI_REPOSITORY_URL }}"
+  yum: 
+    name: "{{ REMI_REPO_URL }}"
 
 - name: yum install php package
-  yum: "name={{ item }} state=present enablerepo=remi-php74"
+  yum: 
+    name: "{{ item }}"
+    state: present
+    enablerepo: remi-php74
   loop:
     - php
     - php-mbstring
