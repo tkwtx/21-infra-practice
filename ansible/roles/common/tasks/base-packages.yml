@@ -1,0 +1,10 @@
+- name: yum install base package
+  yum: 
+    name: "{{ item }}"
+    state: present
+  loop:
+    - vim
+    - wget
+    - yum-cron
+    - unzip
+    - git

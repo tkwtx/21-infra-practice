@@ -1,0 +1,24 @@
+- name: add mysql repository
+  yum:
+    name: "{{ MYSQL_REPO_URL }}"
+    state: present
+
+- name: install mysql
+  yum: 
+    name: "{{ item }}"
+    state: present
+  loop:
+    - mysql-server
+    - mysql-community-client
+    - python2-PyMySQL
+
+- name: mysql running and enabled
+  service: 
+    name: mysqld
+    state: started 
+    enabled: yes
+
+- name: create database 'wordpress'
+  community.mysql.mysql_db:
+    name: wordpress
+    state: present

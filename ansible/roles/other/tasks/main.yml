@@ -1,0 +1,4 @@
+- name: copy bash file
+  copy:
+    src: roles/other/files/mysql_backup.bash
+    dest: "/home/{{ USER_NAME }}/"

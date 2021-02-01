@@ -1,0 +1,15 @@
+#nginx
+NGINX_VERSION: 1.19.6
+
+#php
+REMI_REPO_URL: "http://rpms.famillecollet.com/enterprise/remi-release-7.rpm"
+
+#wordpress
+WORDPRESS_DL_URL: "https://ja.wordpress.org/latest-ja.tar.gz"
+DOMAIN_NAME: "dev.menta.me"
+
+#mysql
+MYSQL_REPO_URL: "http://dev.mysql.com/get/mysql57-community-release-el7-7.noarch.rpm"
+
+#COMMON
+USER_NAME: "menta"
