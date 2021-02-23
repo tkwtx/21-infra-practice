@@ -27,7 +27,6 @@ ENV PATH /home/rails/.yarn/bin:/home/rails/.config/yarn/global/node_modules/.bin
 
 WORKDIR /var/www/dev.rails.me
 
-# COPY dev.rails.me/ .
 COPY conf/nginx/dev.rails.me.conf /etc/nginx/conf.d/
 COPY conf/supervisor/app.conf /etc/supervisor/conf.d/
 
