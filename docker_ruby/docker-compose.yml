@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    ports: 
+      - '3000:3000'
+    volumes:
+      - './dev.rails.me:/var/www/dev.rails.me/'
+    tty: true
+    stdin_open: true
