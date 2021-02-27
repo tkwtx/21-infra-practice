@@ -1,0 +1,21 @@
+- name: make dir
+  file:
+    path: "{{ ROOT_PATH }}/{{ DOMAIN_NAME }}"
+    state: directory
+    mode: '0755'
+
+- name: unarchive wordpress
+  unarchive: 
+    remote_src: yes
+    src: "{{ WORDPRESS_DL_URL }}"
+    dest: "{{ ROOT_PATH }}/{{ DOMAIN_NAME }}"
+    owner: nginx
+    group: nginx
+    extra_opts: [--strip-components=1]
+
+- name: set wordpress config file
+  copy:
+    src: roles/wordpress/files/wp-config.php
+    dest: "{{ ROOT_PATH }}/{{ DOMAIN_NAME }}/"
+    owner: nginx
+    group: nginx

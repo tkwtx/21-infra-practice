@@ -1,0 +1,20 @@
+- name: install php from amazon-linux-extras
+  command: amazon-linux-extras install php7.4
+
+- name: yum install php package
+  yum: 
+    name: "{{ item }}"
+  loop:
+    - php
+    - php-mbstring
+    - php-pdo
+    - php-mysqlnd
+    - php-fpm
+
+- name: set www.conf
+  copy:
+    src: roles/php/files/www.conf
+    dest: /etc/php-fpm.d/
+
+- name: start php-fpm
+  service: name=php-fpm state=started enabled=yes

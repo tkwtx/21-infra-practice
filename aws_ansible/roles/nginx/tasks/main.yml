@@ -1,0 +1,41 @@
+- name: add nginx repository
+  copy:
+    src: roles/nginx/files/nginx.repo
+    dest: /etc/yum.repos.d/
+
+- name: install nginx
+  yum: 
+    name: "nginx-{{ NGINX_VERSION }}"
+    state: present
+
+- name: nginx running and enabled
+  service: name=nginx state=started enabled=yes
+
+- name: make dir
+  file:
+    path: "/etc/nginx/{{ item }}"
+    state: directory
+    owner: nginx
+    group: nginx
+    mode: 0755
+  loop:
+    - sites-available
+    - sites-enabled
+
+- name: set isseeeeeeeey.com
+  copy:
+    src: roles/nginx/files/isseeeeeeeey.com
+    dest: /etc/nginx/sites-available/
+
+- name: set nginx.conf
+  copy:
+    src: roles/nginx/files/nginx.conf
+    dest: /etc/nginx/
+
+- name: make symbolic link
+  file: 
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    state: link
+  with_items:
+    - { src: /etc/nginx/sites-available/isseeeeeeeey.com, dest: /etc/nginx/sites-enabled/isseeeeeeeey.com }
