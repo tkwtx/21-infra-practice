@@ -1,5 +1,2 @@
 - name: include tasks/base.yml
   include_tasks: tasks/base.yml
-
-- name: include tasks/base-packages.yml
-  include_tasks: tasks/base-packages.yml
