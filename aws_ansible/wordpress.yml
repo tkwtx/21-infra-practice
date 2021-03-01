@@ -1,0 +1,12 @@
+---
+- hosts: all
+  become: yes
+  roles:
+    - common
+
+- hosts: aws
+  become: yes
+  roles:
+    - nginx
+    - php
+    - wordpress
