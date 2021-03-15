@@ -56,3 +56,5 @@ rds_user_conf = {
   username = "root"
   password = "password"
 }
+
+domain_name = ""
