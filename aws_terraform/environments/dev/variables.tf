@@ -20,3 +20,5 @@ variable "ec2_key_name" {}
 variable "rds_conf" {}
 
 variable "rds_user_conf" {}
+
+variable "domain_name" {}
