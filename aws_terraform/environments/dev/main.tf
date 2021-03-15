@@ -43,10 +43,10 @@ module "route53" {
 
 module "acm" {
   source = "./../../modules/acm"
+
+  domain = var.domain_name
 }
 
 module "s3" {
   source = "./../../modules/s3"
-  
-  domain = var.domain_name
 }

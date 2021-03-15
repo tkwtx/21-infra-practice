@@ -1,5 +1,5 @@
 resource "aws_acm_certificate" "main" {
-  domain_name = "isseeeeeeeey.com"
+  domain_name = var.domain
   validation_method = "EMAIL"
 
   tags = {
