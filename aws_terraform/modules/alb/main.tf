@@ -52,12 +52,28 @@ resource "aws_lb" "main" {
 
 resource "aws_lb_listener" "main" {
   load_balancer_arn = aws_lb.main.arn
-  port              = "80"
-  protocol          = "HTTP"
+  port              = "443"
+  protocol          = "HTTPS"
+  certificate_arn   = var.acm
 
   default_action {
     target_group_arn  = aws_lb_target_group.main.arn
     type              = "forward"
+  }
+}
+
+resource "aws_lb_listener" "redirect" {
+  load_balancer_arn = aws_lb.main.arn
+  port              = "80"
+  protocol          = "HTTP"
+
+  default_action {
+    type = "redirect"
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
   }
 }
 

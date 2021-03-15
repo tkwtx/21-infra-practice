@@ -2,6 +2,8 @@ variable "subnet" {}
 
 variable "vpc" {}
 
+variable "acm" {}
+
 variable "security_group_ingress_ports" {
   type        = list(number)
   description = "list of ingress ports"

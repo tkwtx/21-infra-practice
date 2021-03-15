@@ -29,6 +29,7 @@ module "rds" {
 module "alb" {
   source = "./../../modules/alb"
 
+  acm             = module.acm.acm_arn
   subnet          = module.vpc.subnet_id
   vpc             = module.vpc.vpc_id
   target_instance = module.ec2.instance_ids
@@ -38,4 +39,8 @@ module "route53" {
   source = "./../../modules/route53"
 
   alb = module.alb.alb_conf
+}
+
+module "acm" {
+  source = "./../../modules/acm"
 }
