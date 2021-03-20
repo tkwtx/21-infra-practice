@@ -1,15 +1,23 @@
-version: 2.1
-orbs:
-  ruby: circleci/ruby@0.1.2 
+version: 2.0
 
 jobs:
-  build:
+  deploy:
     docker:
-      - image: circleci/ruby:2.6.3-stretch-node
-    executor: ruby/default
+      - image: circleci/ruby:2.7.2
     steps:
-      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - 0c:8d:8e:d6:0b:8b:86:96:10:7e:74:6b:ce:a6:20:77
       - run:
-          name: Which bundler?
-          command: bundle -v
-      - ruby/bundle-install
+          name: make ssh connection
+          command: |
+            ssh -o StrictHostKeyChecking=no -p $SSH_PORT $SSH_USER@$SSH_HOST "/var/www/menta/deploy.sh"
+
+workflows:
+  version: 2
+  deploy:
+    jobs:
+      - deploy:
+          filters:
+            branches:
+              only: main
