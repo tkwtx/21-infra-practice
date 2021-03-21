@@ -1,21 +1,49 @@
-version: 2.0
+version: 2.1
 
-jobs:
-  deploy:
+executors:
+  deploy_container:
     docker:
       - image: circleci/ruby:2.7.2
+
+orbs:
+  slack: circleci/slack@4.3.1
+
+commands:
+  deploy:
     steps:
       - add_ssh_keys:
           fingerprints:
             - 0c:8d:8e:d6:0b:8b:86:96:10:7e:74:6b:ce:a6:20:77
       - run:
-          name: make ssh connection
+          name: deploy
           command: |
             ssh -o StrictHostKeyChecking=no -p $SSH_PORT $SSH_USER@$SSH_HOST "/var/www/menta/deploy.sh"
 
+  notify_slack_pass:
+    steps:
+      - slack/notify:
+          event: pass
+          template: basic_success_1
+
+  notify_slack_fail:
+    steps:
+      - slack/notify:
+          event: fail
+          mentions: 'here'
+          template: basic_fail_1
+
+jobs:
+  deploy:
+    executor: deploy_container
+    steps:
+      - checkout
+      - deploy
+      - notify_slack_pass
+      - notify_slack_fail
+
 workflows:
   version: 2
-  deploy:
+  release-workflow:
     jobs:
       - deploy:
           filters:
