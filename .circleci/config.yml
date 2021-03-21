@@ -17,7 +17,7 @@ commands:
       - run:
           name: deploy
           command: |
-            ssh -o StrictHostKeyChecking=no -p $SSH_PORT $SSH_USER@$SSH_HOST "/var/www/menta/deployaaaaaaaa.sh"
+            ssh -o StrictHostKeyChecking=no -p $SSH_PORT $SSH_USER@$SSH_HOST "/var/www/menta/deploy.sh"
 
   notify_slack_pass:
     steps:
