@@ -29,7 +29,7 @@ commands:
     steps:
       - slack/notify:
           event: fail
-          mentions: 'here'
+          mentions: '@here'
           template: basic_fail_1
 
 jobs:
