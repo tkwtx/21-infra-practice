@@ -41,11 +41,11 @@ jobs:
       - notify_slack_pass
       - notify_slack_fail
 
-workflows:
-  version: 2
-  release-workflow:
-    jobs:
-      - deploy:
-          filters:
-            branches:
-              only: main
+# workflows:
+#   version: 2
+#   release-workflow:
+#     jobs:
+#       - deploy:
+#           filters:
+#             branches:
+#               only: main
