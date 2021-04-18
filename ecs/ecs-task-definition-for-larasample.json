@@ -1,0 +1,93 @@
+{
+    "family": "larasample",
+    "networkMode": "awsvpc",
+    "executionRoleArn": "arn:aws:iam::089000569075:role/larasample-task-execution-role",
+    "taskRoleArn": "arn:aws:iam::089000569075:role/larasample-task-role",
+    "containerDefinitions": [
+        {
+            "name": "nginx",
+            "image": "089000569075.dkr.ecr.ap-northeast-1.amazonaws.com/larasample/nginx:latest",
+            "linuxParameters": {
+                "initProcessEnabled": true
+            },    
+            "portMappings": [
+                {
+                    "containerPort": 80,
+                    "hostPort": 80,
+                    "protocol": "tcp"
+                }
+            ],
+            "essential": true,
+            "dependsOn": [
+                {
+                    "containerName": "laravel",
+                    "condition": "START"
+                }
+            ],
+            "readonlyRootFilesystem": false,
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "larasample",
+                    "awslogs-region": "ap-northeast-1",
+                    "awslogs-stream-prefix": "nginx"
+                }
+            }
+        },
+        {
+            "name": "laravel",
+            "image": "089000569075.dkr.ecr.ap-northeast-1.amazonaws.com/larasample/laravel:latest",
+            "linuxParameters": {
+                "initProcessEnabled": true
+            },    
+            "essential": false,
+            "environment": [
+                {
+                    "name": "APP_ENV",
+                    "value": "production"
+                },
+                {
+                    "name": "APP_DEBUG",
+                    "value": "true"
+                },
+                {
+                    "name": "LOG_CHANNEL",
+                    "value": "stderr"
+                }
+            ],
+            "secrets": [
+                {
+                    "name": "APP_KEY",
+                    "valueFrom": "arn:aws:ssm:ap-northeast-1:089000569075:parameter/APP_KEY"
+                },
+                {
+                    "name": "APP_WORD",
+                    "valueFrom": "arn:aws:ssm:ap-northeast-1:089000569075:parameter/APP_WORD"
+                },
+                {
+                    "name": "DB_HOST",
+                    "valueFrom": "arn:aws:ssm:ap-northeast-1:089000569075:parameter/DB_HOST" 
+                },
+                {
+                    "name": "DB_PASSWORD",
+                    "valueFrom": "arn:aws:ssm:ap-northeast-1:089000569075:parameter/DB_PASSWORD" 
+                }
+            ],
+            "privileged": false,
+            "readonlyRootFilesystem": false,
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "larasample",
+                    "awslogs-region": "ap-northeast-1",
+                    "awslogs-stream-prefix": "laravel"
+                }
+            }
+        }
+    ],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "256",
+    "memory": "512"
+}
